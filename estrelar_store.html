@@ -1,0 +1,836 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Estrelar.Uncopy.com.br - Loja Oficial Roblox</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        estellar: {
+                            dark: '#070b19',
+                            card: '#0f172a',
+                            border: '#1e293b',
+                            blue: '#0284c7',
+                            yellow: '#facc15',
+                            accent: '#38bdf8'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #070b19;
+            color: #f8fafc;
+        }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #070b19;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0284c7;
+        }
+        .yellow-blue-glow {
+            box-shadow: 0 0 25px rgba(2, 132, 199, 0.25);
+        }
+        .yellow-blue-glow-hover:hover {
+            box-shadow: 0 0 30px rgba(250, 204, 21, 0.3);
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col selection:bg-sky-500 selection:text-black">
+
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-40 backdrop-blur-md bg-[#070b19]/90 border-b border-estellar-border">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+            <!-- Logo & Title -->
+            <div class="flex items-center gap-3 cursor-pointer" onclick="filterCategory('todos')">
+                <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-sky-500 via-blue-600 to-yellow-400 p-0.5 shadow-lg shadow-sky-500/20">
+                    <div class="w-full h-full bg-[#0f172a] rounded-[14px] flex items-center justify-center">
+                        <i class="fa-solid fa-gamepad text-xl text-yellow-300 drop-shadow-[0_0_8px_rgba(250,204,21,0.6)]"></i>
+                    </div>
+                </div>
+                <div>
+                    <span class="text-lg sm:text-2xl font-extrabold tracking-tight bg-gradient-to-r from-sky-400 via-blue-300 to-yellow-300 bg-clip-text text-transparent">Estrelar.Uncopy.com.br</span>
+                    <span class="block text-[11px] text-yellow-400 font-semibold tracking-widest uppercase">Roblox Store Oficial</span>
+                </div>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex items-center gap-8 font-medium text-sm text-slate-300">
+                <button onclick="filterCategory('todos')" class="hover:text-yellow-400 transition-colors">Início</button>
+                <button onclick="scrollToSection('catalogo')" class="hover:text-yellow-400 transition-colors">Produtos</button>
+                <button onclick="openFeedbackModal()" class="hover:text-yellow-400 transition-colors flex items-center gap-1.5"><i class="fa-solid fa-star text-yellow-400"></i> Avaliações</button>
+                <button onclick="openAdminModal()" class="text-xs px-3.5 py-2 rounded-xl bg-sky-950/60 border border-sky-800/60 hover:bg-sky-900/60 text-sky-300 transition-all"><i class="fa-solid fa-lock mr-1"></i> Admin</button>
+            </nav>
+
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4">
+                <button onclick="toggleCart()" class="relative p-3 rounded-xl bg-estellar-card border border-estellar-border hover:border-sky-500/50 transition-all text-slate-200 hover:text-white">
+                    <i class="fa-solid fa-cart-shopping text-lg text-yellow-400"></i>
+                    <span id="cart-badge" class="absolute -top-1.5 -right-1.5 w-6 h-6 rounded-full bg-yellow-400 text-black text-xs font-black flex items-center justify-center shadow-lg shadow-yellow-400/50 hidden">0</span>
+                </button>
+                <button onclick="toggleMobileMenu()" class="md:hidden p-3 rounded-xl bg-estellar-card border border-estellar-border text-slate-200 hover:text-white">
+                    <i class="fa-solid fa-bars text-lg"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Drawer -->
+        <div id="mobile-menu" class="hidden md:hidden bg-estellar-card border-b border-estellar-border px-6 py-4 space-y-3">
+            <button onclick="filterCategory('todos'); toggleMobileMenu();" class="block w-full text-left py-2 text-slate-300 hover:text-yellow-400 font-medium">Início</button>
+            <button onclick="scrollToSection('catalogo'); toggleMobileMenu();" class="block w-full text-left py-2 text-slate-300 hover:text-yellow-400 font-medium">Produtos</button>
+            <button onclick="openFeedbackModal(); toggleMobileMenu();" class="block w-full text-left py-2 text-slate-300 hover:text-yellow-400 font-medium">Avaliações</button>
+            <button onclick="openAdminModal(); toggleMobileMenu();" class="block w-full text-left py-2 text-sky-400 font-semibold"><i class="fa-solid fa-lock mr-1"></i> Painel Admin</button>
+        </div>
+    </header>
+
+    <!-- Hero Banner -->
+    <section class="relative overflow-hidden py-16 lg:py-24 border-b border-estellar-border bg-gradient-to-b from-[#0f172a]/60 to-[#070b19]">
+        <div class="absolute inset-0 bg-[radial-gradient(ellipse_at_top,_var(--tw-gradient-stops))] from-sky-900/20 via-transparent to-transparent pointer-events-none"></div>
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+            <div class="space-y-6 text-center lg:text-left">
+                <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xs font-semibold tracking-wider uppercase">
+                    <i class="fa-solid fa-bolt text-yellow-400"></i> Entrega Automática via Roblox & Pix
+                </div>
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-white leading-tight">
+                    Compre seus jogos e itens com segurança na <span class="bg-gradient-to-r from-sky-400 via-blue-400 to-yellow-300 bg-clip-text text-transparent">Estrelar</span>
+                </h1>
+                <p class="text-base sm:text-lg text-slate-400 max-w-xl mx-auto lg:mx-0">
+                    A melhor loja de itens de Roblox do Brasil! Adquira Steal a Brainrot, Steal a Egg e Gamajo Estrelar instantaneamente.
+                </p>
+                <div class="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+                    <button onclick="scrollToSection('catalogo')" class="px-8 py-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 hover:to-blue-500 text-white font-bold tracking-wide shadow-lg shadow-sky-500/30 transition-all transform hover:-translate-y-0.5">
+                        <i class="fa-solid fa-bag-shopping mr-2"></i> Ver Produtos
+                    </button>
+                    <a href="https://discord.gg/exemplo" target="_blank" rel="noopener noreferrer" class="px-8 py-4 rounded-xl bg-estellar-card border border-estellar-border hover:border-sky-500/50 text-slate-200 hover:text-white font-semibold transition-all flex items-center gap-2">
+                        <i class="fa-brands fa-discord text-sky-400 text-lg"></i> Comunidade Discord
+                    </a>
+                </div>
+            </div>
+            <div class="relative flex justify-center">
+                <div class="w-full max-w-md bg-gradient-to-tr from-sky-950/40 to-blue-950/40 p-2 rounded-3xl border border-sky-800/30 yellow-blue-glow">
+                    <div class="bg-estellar-card p-6 rounded-2xl relative overflow-hidden">
+                        <div class="absolute top-0 right-0 transform translate-x-4 -translate-y-4 w-32 h-32 bg-yellow-500/10 rounded-full blur-2xl pointer-events-none"></div>
+                        <div class="flex items-center justify-between mb-6">
+                            <span class="text-xs font-bold text-yellow-400 uppercase tracking-widest"><i class="fa-solid fa-fire text-yellow-400 mr-1"></i> Mais Vendido</span>
+                            <span class="px-2.5 py-1 rounded-full bg-emerald-950 text-emerald-400 text-xs font-bold border border-emerald-800/50">Estoque Ativo</span>
+                        </div>
+                        <div class="h-48 rounded-xl bg-gradient-to-br from-sky-900/20 to-blue-950/50 border border-estellar-border flex items-center justify-center mb-6 relative overflow-hidden group">
+                            <i class="fa-solid fa-star text-6xl text-yellow-400 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_15px_rgba(250,204,21,0.5)]"></i>
+                        </div>
+                        <h3 class="text-xl font-bold text-white mb-2">GAMAJO ESTRELAR com painel</h3>
+                        <p class="text-xs text-slate-400 mb-6">Acesso completo ao painel de controle e vantagens máximas no jogo.</p>
+                        <div class="flex items-center justify-between">
+                            <div>
+                                <span class="text-xs text-slate-500 block">Preço oficial</span>
+                                <span class="text-2xl font-extrabold text-yellow-400">R$ 30,00</span>
+                            </div>
+                            <button onclick="quickBuy('GAMAJO ESTRELAR com painel', 30.00, 'gamajo-estrelar')" class="px-5 py-2.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 text-white font-bold text-sm transition-all shadow-md shadow-sky-500/40">
+                                Comprar Agora
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Categories Filter & Search Bar -->
+    <section id="catalogo" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 w-full">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
+            <div>
+                <h2 class="text-2xl sm:text-3xl font-extrabold text-white">Vitrine de Produtos</h2>
+                <p class="text-sm text-slate-400 mt-1">Selecione uma categoria ou busque pelo item desejado.</p>
+            </div>
+            <!-- Search Input -->
+            <div class="relative w-full md:w-72">
+                <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                </span>
+                <input type="text" id="search-input" oninput="handleSearch()" placeholder="Pesquisar itens..." class="w-full pl-10 pr-4 py-3 bg-estellar-card border border-estellar-border rounded-xl text-sm text-white placeholder-slate-500 focus:outline-none focus:border-sky-500 transition-colors">
+            </div>
+        </div>
+
+        <!-- Category Buttons -->
+        <div class="flex items-center gap-3 overflow-x-auto pb-4 mb-8 no-scrollbar" id="category-tabs">
+            <button onclick="filterCategory('todos')" data-category="todos" class="category-btn px-5 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap bg-sky-500 text-white shadow-md shadow-sky-500/30 transition-all">
+                <i class="fa-solid fa-gamepad mr-2"></i> Todos os Jogos
+            </button>
+            <button onclick="filterCategory('steal-a-brainrot')" data-category="steal-a-brainrot" class="category-btn px-5 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap bg-estellar-card border border-estellar-border text-slate-300 hover:text-white hover:border-sky-500/50 transition-all">
+                🧠 Steal a Brainrot
+            </button>
+            <button onclick="filterCategory('roube-um-ovo')" data-category="roube-um-ovo" class="category-btn px-5 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap bg-estellar-card border border-estellar-border text-slate-300 hover:text-white hover:border-sky-500/50 transition-all">
+                🥚 Steal a Egg / Roube um Ovo
+            </button>
+            <button onclick="filterCategory('gamajo-estrelar')" data-category="gamajo-estrelar" class="category-btn px-5 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap bg-estellar-card border border-estellar-border text-slate-300 hover:text-white hover:border-sky-500/50 transition-all">
+                ⭐ Gamajo Estrelar
+            </button>
+        </div>
+
+        <!-- Products Grid -->
+        <div id="products-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+            <!-- Inserido dinamicamente via JS -->
+        </div>
+
+        <!-- No results message -->
+        <div id="no-results" class="hidden text-center py-16">
+            <i class="fa-solid fa-box-open text-5xl text-slate-600 mb-4"></i>
+            <h3 class="text-xl font-bold text-slate-300">Nenhum produto encontrado</h3>
+            <p class="text-sm text-slate-500 mt-1">Tente buscar por outro termo.</p>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="mt-auto border-t border-estellar-border bg-[#04060f] py-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-1 md:grid-cols-3 gap-8 items-center">
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-yellow-400 p-0.5">
+                    <div class="w-full h-full bg-[#0f172a] rounded-[10px] flex items-center justify-center font-bold text-yellow-400">E</div>
+                </div>
+                <div>
+                    <span class="text-base font-bold text-white tracking-wider">Estrelar.Uncopy.com.br</span>
+                    <p class="text-xs text-slate-500">© 2026 Estrelar. Todos os direitos reservados.</p>
+                </div>
+            </div>
+            <div class="text-center text-xs text-slate-500">
+                A Estrelar Store não possui vínculo oficial com a Roblox Corporation. Marcas pertencem aos respectivos criadores.
+            </div>
+            <div class="flex items-center justify-center md:justify-end gap-4">
+                <a href="https://discord.gg/exemplo" target="_blank" rel="noopener noreferrer" class="w-10 h-10 rounded-xl bg-estellar-card border border-estellar-border hover:border-sky-500 flex items-center justify-center text-slate-300 hover:text-sky-400 transition-all">
+                    <i class="fa-brands fa-discord"></i>
+                </a>
+                <a href="#" onclick="openFeedbackModal()" class="w-10 h-10 rounded-xl bg-estellar-card border border-estellar-border hover:border-yellow-500 flex items-center justify-center text-slate-300 hover:text-yellow-400 transition-all">
+                    <i class="fa-solid fa-star"></i>
+                </a>
+                <a href="#" onclick="openAdminModal()" class="w-10 h-10 rounded-xl bg-estellar-card border border-estellar-border hover:border-sky-500 flex items-center justify-center text-slate-300 hover:text-sky-400 transition-all">
+                    <i class="fa-solid fa-lock"></i>
+                </a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Cart Drawer Modal -->
+    <div id="cart-drawer" class="fixed inset-0 z-50 bg-black/70 backdrop-blur-sm hidden flex justify-end transition-opacity">
+        <div class="w-full max-w-md bg-[#0b1329] border-l border-estellar-border h-full flex flex-col shadow-2xl transform transition-transform">
+            <!-- Header -->
+            <div class="p-6 border-b border-estellar-border flex items-center justify-between">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-cart-shopping text-yellow-400"></i>
+                    <h3 class="text-lg font-bold text-white">Carrinho de Compras</h3>
+                </div>
+                <button onclick="toggleCart()" class="p-2 text-slate-400 hover:text-white rounded-lg hover:bg-estellar-card transition-colors">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+            <!-- Cart Items List -->
+            <div id="cart-items-container" class="flex-1 overflow-y-auto p-6 space-y-4">
+                <!-- Inserido dinamicamente -->
+            </div>
+            <!-- Cart Footer -->
+            <div class="p-6 border-t border-estellar-border bg-estellar-card">
+                <div class="flex items-center justify-between mb-4">
+                    <span class="text-sm text-slate-400">Total:</span>
+                    <span id="cart-total" class="text-2xl font-extrabold text-yellow-400">R$ 0,00</span>
+                </div>
+                <button onclick="proceedToCheckout()" id="checkout-btn" class="w-full py-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 text-white font-bold tracking-wide shadow-lg shadow-sky-500/30 transition-all disabled:opacity-50 disabled:cursor-not-allowed">
+                    Finalizar Compra via Pix
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Checkout Modal -->
+    <div id="checkout-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="w-full max-w-lg bg-[#0f172a] border border-estellar-border rounded-3xl p-6 sm:p-8 relative shadow-2xl">
+            <button onclick="closeCheckoutModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            
+            <div id="checkout-step-1">
+                <div class="flex items-center gap-3 mb-6">
+                    <div class="w-10 h-10 rounded-xl bg-sky-950 border border-sky-800 flex items-center justify-center text-sky-400">
+                        <i class="fa-solid fa-user-tag text-lg"></i>
+                    </div>
+                    <div>
+                        <h3 class="text-xl font-bold text-white">Identificação no Roblox</h3>
+                        <p class="text-xs text-slate-400">Informe seu Nick exato para a entrega automática.</p>
+                    </div>
+                </div>
+                <form id="checkout-form" onsubmit="generatePix(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Seu Nick no Roblox</label>
+                        <div class="relative">
+                            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-500">
+                                <i class="fa-solid fa-at"></i>
+                            </span>
+                            <input type="text" id="roblox-nick" required placeholder="Ex: EstrelarGamer" class="w-full pl-10 pr-4 py-3 bg-[#070b19] border border-estellar-border rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-sky-500 transition-colors">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Discord (Opcional)</label>
+                        <input type="text" id="discord-user" placeholder="Ex: usuario#0001" class="w-full px-4 py-3 bg-[#070b19] border border-estellar-border rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-sky-500 transition-colors">
+                    </div>
+                    <div class="pt-4">
+                        <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 text-white font-bold tracking-wide shadow-lg shadow-sky-500/30 transition-all">
+                            Gerar QR Code Pix
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div id="checkout-step-2" class="hidden text-center">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-yellow-500/10 border border-yellow-500/30 text-yellow-400 text-xs font-semibold mb-4">
+                    <i class="fa-solid fa-clock"></i> Aguardando Pagamento (<span id="pix-timer">05:00</span>)
+                </div>
+                <h3 class="text-xl font-bold text-white mb-1">Escaneie o Pix</h3>
+                <p class="text-xs text-slate-400 mb-6">Utilize o app do seu banco para pagar com a chave oficial.</p>
+                
+                <!-- Mock QR Code Box -->
+                <div class="w-48 h-48 mx-auto bg-white p-3 rounded-2xl flex items-center justify-center mb-6 shadow-xl relative">
+                    <div class="w-full h-full border-4 border-dashed border-sky-900 rounded-xl flex flex-col items-center justify-center p-2 text-center bg-sky-50">
+                        <i class="fa-solid fa-qrcode text-6xl text-sky-900 mb-1"></i>
+                        <span class="text-[10px] font-bold text-sky-900">ESTRELAR PIX SEGURO</span>
+                    </div>
+                </div>
+
+                <!-- Copia e Cola (Chave Exata Solicitada) -->
+                <div class="mb-6">
+                    <label class="block text-[11px] font-semibold text-slate-400 uppercase mb-1.5">Chave Pix Copia e Cola</label>
+                    <div class="flex items-center gap-2">
+                        <input type="text" id="pix-copy-input" readonly value="749f1d5f-85bb-4477-89f1-d263f1a169f4" class="w-full px-3 py-2.5 bg-[#070b19] border border-estellar-border rounded-xl text-xs text-slate-300 font-mono select-all">
+                        <button onclick="copyPixCode()" class="px-4 py-2.5 bg-yellow-400 hover:bg-yellow-300 text-black rounded-xl text-xs font-extrabold transition-colors whitespace-nowrap">
+                            <i class="fa-solid fa-copy mr-1"></i> Copiar
+                        </button>
+                    </div>
+                </div>
+
+                <div class="space-y-3">
+                    <button onclick="simulatePaymentSuccess()" class="w-full py-3.5 rounded-xl bg-emerald-600 hover:bg-emerald-500 text-white font-bold text-sm tracking-wide shadow-lg shadow-emerald-600/30 transition-all">
+                        <i class="fa-solid fa-check mr-2"></i> Simular Pagamento Aprovado
+                    </button>
+                    <button onclick="resetCheckout()" class="text-xs text-slate-400 hover:text-white underline">Voltar</button>
+                </div>
+            </div>
+
+            <div id="checkout-step-3" class="hidden text-center py-4">
+                <div class="w-16 h-16 rounded-full bg-emerald-950 border border-emerald-500/50 flex items-center justify-center mx-auto mb-4 text-emerald-400 text-3xl shadow-lg shadow-emerald-500/20">
+                    <i class="fa-solid fa-circle-check"></i>
+                </div>
+                <h3 class="text-2xl font-extrabold text-white mb-2">Pagamento Aprovado!</h3>
+                <p class="text-sm text-slate-300 mb-6">Parabéns, <span id="success-nick" class="text-yellow-400 font-bold"></span>! Seu pedido foi registrado com sucesso.</p>
+                <div class="bg-[#070b19] border border-estellar-border p-4 rounded-xl text-left text-xs text-slate-400 space-y-2 mb-6">
+                    <p><strong class="text-white">Status:</strong> Processando entrega no Roblox...</p>
+                    <p><strong class="text-white">Instruções:</strong> O sistema enviará o item automaticamente na sua conta. Em caso de dúvidas, abra um ticket no Discord.</p>
+                </div>
+                <button onclick="closeCheckoutModalCompletely()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold text-sm transition-all">
+                    Concluir
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Admin Modal -->
+    <div id="admin-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="w-full max-w-2xl bg-[#0f172a] border border-estellar-border rounded-3xl p-6 sm:p-8 relative shadow-2xl max-h-[90vh] overflow-y-auto">
+            <button onclick="closeAdminModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-sky-950 border border-sky-800 flex items-center justify-center text-sky-400">
+                    <i class="fa-solid fa-lock text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Painel Administrativo</h3>
+                    <p class="text-xs text-slate-400">Adicione novos itens à vitrine da Estrelar.</p>
+                </div>
+            </div>
+            
+            <form id="admin-product-form" onsubmit="addNewProduct(event)" class="space-y-4">
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Nome do Produto</label>
+                        <input type="text" id="admin-name" required placeholder="Ex: Item Exclusivo" class="w-full px-4 py-3 bg-[#070b19] border border-estellar-border rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-sky-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Categoria</label>
+                        <select id="admin-category" class="w-full px-4 py-3 bg-[#070b19] border border-estellar-border rounded-xl text-sm text-white focus:outline-none focus:border-sky-500">
+                            <option value="steal-a-brainrot">Steal a Brainrot</option>
+                            <option value="roube-um-ovo">Steal a Egg / Roube um Ovo</option>
+                            <option value="gamajo-estrelar">Gamajo Estrelar</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Preço (R$)</label>
+                        <input type="number" step="0.01" id="admin-price" required placeholder="15.00" class="w-full px-4 py-3 bg-[#070b19] border border-estellar-border rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-sky-500">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Ícone / FontAwesome</label>
+                        <input type="text" id="admin-icon" value="fa-solid fa-gamepad" class="w-full px-4 py-3 bg-[#070b19] border border-estellar-border rounded-xl text-sm text-white focus:outline-none focus:border-sky-500">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Descrição</label>
+                    <textarea id="admin-desc" rows="3" required placeholder="Descreva o produto..." class="w-full px-4 py-3 bg-[#070b19] border border-estellar-border rounded-xl text-sm text-white placeholder-slate-600 focus:outline-none focus:border-sky-500"></textarea>
+                </div>
+                <button type="submit" class="w-full py-4 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 text-white font-bold text-sm tracking-wide shadow-lg shadow-sky-500/30 transition-all">
+                    <i class="fa-solid fa-plus mr-2"></i> Cadastrar Produto
+                </button>
+            </form>
+
+            <div class="mt-8 pt-6 border-t border-estellar-border">
+                <h4 class="text-sm font-bold text-white mb-3">Estatísticas</h4>
+                <div class="grid grid-cols-2 gap-4">
+                    <div class="bg-[#070b19] p-4 rounded-xl border border-estellar-border">
+                        <span class="text-xs text-slate-400 block">Total de Produtos</span>
+                        <span id="stat-products" class="text-xl font-bold text-yellow-400">0</span>
+                    </div>
+                    <div class="bg-[#070b19] p-4 rounded-xl border border-estellar-border">
+                        <span class="text-xs text-slate-400 block">Vendas Concluídas</span>
+                        <span class="text-xl font-bold text-emerald-400">384</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Feedback Modal -->
+    <div id="feedback-modal" class="fixed inset-0 z-50 bg-black/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+        <div class="w-full max-w-lg bg-[#0f172a] border border-estellar-border rounded-3xl p-6 sm:p-8 relative shadow-2xl">
+            <button onclick="closeFeedbackModal()" class="absolute top-6 right-6 text-slate-400 hover:text-white">
+                <i class="fa-solid fa-xmark text-xl"></i>
+            </button>
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-yellow-500/10 border border-yellow-500/30 flex items-center justify-center text-yellow-400">
+                    <i class="fa-solid fa-star text-lg"></i>
+                </div>
+                <div>
+                    <h3 class="text-xl font-bold text-white">Avaliações da Estrelar</h3>
+                    <p class="text-xs text-slate-400">Depoimentos de clientes satisfeitos.</p>
+                </div>
+            </div>
+            
+            <div class="space-y-4 max-h-60 overflow-y-auto pr-2 mb-6">
+                <div class="bg-[#070b19] p-4 rounded-xl border border-estellar-border">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-sm text-white">@RobloxStar_2026</span>
+                        <div class="text-yellow-400 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    </div>
+                    <p class="text-xs text-slate-300">"Comprei o Gamajo Estrelar com painel e recebi na mesma hora. Loja 100% confiável!"</p>
+                </div>
+                <div class="bg-[#070b19] p-4 rounded-xl border border-estellar-border">
+                    <div class="flex items-center justify-between mb-2">
+                        <span class="font-bold text-sm text-white">@GamerPro_BR</span>
+                        <div class="text-yellow-400 text-xs"><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i><i class="fa-solid fa-star"></i></div>
+                    </div>
+                    <p class="text-xs text-slate-300">"Steal a Brainrot sem animação por R$ 5 tá muito barato, entrega rápida demais!"</p>
+                </div>
+            </div>
+
+            <button onclick="closeFeedbackModal()" class="w-full py-3.5 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 text-white font-bold text-sm transition-all">
+                Fechar
+            </button>
+        </div>
+    </div>
+
+    <!-- Notification Toast -->
+    <div id="toast" class="fixed bottom-6 right-6 z-50 bg-[#0f172a] border border-sky-500/50 px-5 py-3.5 rounded-2xl shadow-2xl flex items-center gap-3 transform translate-y-32 opacity-0 transition-all duration-300">
+        <div id="toast-icon" class="w-8 h-8 rounded-xl bg-sky-950 flex items-center justify-center text-sky-400">
+            <i class="fa-solid fa-check"></i>
+        </div>
+        <div>
+            <h5 id="toast-title" class="text-xs font-bold text-white">Sucesso</h5>
+            <p id="toast-msg" class="text-[11px] text-slate-400">Ação realizada com sucesso.</p>
+        </div>
+    </div>
+
+    <!-- JavaScript Application Logic -->
+    <script>
+        // Produtos exatos solicitados por você com categorias corretas
+        let products = [
+            {
+                id: 1,
+                name: "STEAL A BRAINROT SEM ANIMAÇÃO",
+                category: "steal-a-brainrot",
+                price: 5.00,
+                desc: "Versão padrão do jogo Steal a Brainrot sem animações adicionais.",
+                icon: "fa-solid fa-brain"
+            },
+            {
+                id: 2,
+                name: "STEAL A BRAINROT COM ANIMAÇÃO",
+                category: "steal-a-brainrot",
+                price: 10.00,
+                desc: "Versão completa com animações exclusivas e personalizadas.",
+                icon: "fa-solid fa-wand-magic-sparkles"
+            },
+            {
+                id: 3,
+                name: "STEAL A EGG SEM PAINEL",
+                category: "roube-um-ovo",
+                price: 5.00,
+                desc: "Acesso ao jogo Steal a Egg / Roube um Ovo na versão padrão sem painel.",
+                icon: "fa-solid fa-egg"
+            },
+            {
+                id: 4,
+                name: "STEAL A EGG COM PAINEL",
+                category: "roube-um-ovo",
+                price: 10.00,
+                desc: "Acesso completo ao Steal a Egg com painel administrativo inclusivo.",
+                icon: "fa-solid fa-shield-halved"
+            },
+            {
+                id: 5,
+                name: "GAMAJO ESTRELAR com painel",
+                category: "gamajo-estrelar",
+                price: 30.00,
+                desc: "Gamajo Estrelar completo acompanhado de painel de controle avançado.",
+                icon: "fa-solid fa-star"
+            },
+            {
+                id: 6,
+                name: "GAMAJO ESTRELAR sem painel",
+                category: "gamajo-estrelar",
+                price: 20.00,
+                desc: "Gamajo Estrelar versão padrão para curtir com os amigos.",
+                icon: "fa-solid fa-gamepad"
+            }
+        ];
+
+        let cart = [];
+        let currentCategory = 'todos';
+        let timerInterval = null;
+
+        window.onload = function() {
+            renderProducts();
+            updateCartUI();
+            updateAdminStats();
+        }
+
+        // Renderizar produtos
+        function renderProducts(filteredList = null) {
+            const grid = document.getElementById('products-grid');
+            const noResults = document.getElementById('no-results');
+            grid.innerHTML = '';
+
+            const listToRender = filteredList || products;
+
+            if (listToRender.length === 0) {
+                noResults.classList.remove('hidden');
+                return;
+            } else {
+                noResults.classList.add('hidden');
+            }
+
+            listToRender.forEach(prod => {
+                const card = document.createElement('div');
+                card.className = 'bg-estellar-card border border-estellar-border rounded-2xl p-5 flex flex-col justify-between hover:border-sky-500/50 transition-all duration-300 group yellow-blue-glow-hover';
+                card.innerHTML = `
+                    <div>
+                        <div class="h-36 rounded-xl bg-gradient-to-br from-sky-900/20 to-blue-950/40 border border-estellar-border flex items-center justify-center mb-4 relative overflow-hidden">
+                            <i class="${prod.icon} text-4xl text-yellow-400 group-hover:scale-110 transition-transform duration-300 drop-shadow-[0_0_10px_rgba(250,204,21,0.4)]"></i>
+                            <span class="absolute top-2.5 right-2.5 px-2.5 py-0.5 rounded-md bg-sky-950/80 text-sky-300 text-[10px] font-bold border border-sky-800/50 uppercase">${formatCategoryName(prod.category)}</span>
+                        </div>
+                        <h3 class="text-base font-bold text-white mb-1.5 group-hover:text-yellow-300 transition-colors">${prod.name}</h3>
+                        <p class="text-xs text-slate-400 mb-4 line-clamp-2">${prod.desc}</p>
+                    </div>
+                    <div class="flex items-center justify-between pt-4 border-t border-estellar-border">
+                        <div>
+                            <span class="text-[10px] text-slate-500 block uppercase font-medium">Preço</span>
+                            <span class="text-lg font-extrabold text-yellow-400">R$ ${prod.price.toFixed(2).replace('.', ',')}</span>
+                        </div>
+                        <button onclick="addToCart(${prod.id})" class="px-4 py-2 rounded-xl bg-gradient-to-r from-sky-500 to-blue-600 hover:from-sky-400 text-white font-bold text-xs transition-all shadow-md shadow-sky-500/30 flex items-center gap-1.5">
+                            <i class="fa-solid fa-cart-plus"></i> Comprar
+                        </button>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        function formatCategoryName(cat) {
+            const map = {
+                'steal-a-brainrot': 'Brainrot',
+                'roube-um-ovo': 'Ovo / Egg',
+                'gamajo-estrelar': 'Estrelar'
+            };
+            return map[cat] || cat;
+        }
+
+        function filterCategory(category) {
+            currentCategory = category;
+            
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                if (btn.getAttribute('data-category') === category) {
+                    btn.className = 'category-btn px-5 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap bg-sky-500 text-white shadow-md shadow-sky-500/30 transition-all';
+                } else {
+                    btn.className = 'category-btn px-5 py-2.5 rounded-xl font-semibold text-sm whitespace-nowrap bg-estellar-card border border-estellar-border text-slate-300 hover:text-white hover:border-sky-500/50 transition-all';
+                }
+            });
+
+            if (category === 'todos') {
+                renderProducts();
+            } else {
+                const filtered = products.filter(p => p.category === category);
+                renderProducts(filtered);
+            }
+        }
+
+        function handleSearch() {
+            const query = document.getElementById('search-input').value.toLowerCase();
+            let list = currentCategory === 'todos' ? products : products.filter(p => p.category === currentCategory);
+            
+            if (query.trim() !== '') {
+                list = list.filter(p => p.name.toLowerCase().includes(query) || p.desc.toLowerCase().includes(query));
+            }
+            renderProducts(list);
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            if (!product) return;
+
+            const existingItem = cart.find(item => item.id === productId);
+            if (existingItem) {
+                existingItem.qty += 1;
+            } else {
+                cart.push({ ...product, qty: 1 });
+            }
+
+            updateCartUI();
+            showToast("Adicionado ao Carrinho", `${product.name} foi inserido no carrinho.`);
+        }
+
+        function quickBuy(name, price, category) {
+            cart = [{ id: 999, name, price, qty: 1, category, icon: 'fa-solid fa-star' }];
+            updateCartUI();
+            openCheckoutModal();
+        }
+
+        function updateCartUI() {
+            const container = document.getElementById('cart-items-container');
+            const badge = document.getElementById('cart-badge');
+            const totalEl = document.getElementById('cart-total');
+            const checkoutBtn = document.getElementById('checkout-btn');
+
+            const totalItems = cart.reduce((sum, item) => sum + item.qty, 0);
+            const totalPrice = cart.reduce((sum, item) => sum + (item.price * item.qty), 0);
+
+            if (totalItems > 0) {
+                badge.textContent = totalItems;
+                badge.classList.remove('hidden');
+                checkoutBtn.removeAttribute('disabled');
+            } else {
+                badge.classList.add('hidden');
+                checkoutBtn.setAttribute('disabled', 'true');
+            }
+
+            totalEl.textContent = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
+
+            if (cart.length === 0) {
+                container.innerHTML = `
+                    <div class="text-center py-16 text-slate-500">
+                        <i class="fa-solid fa-cart-shopping text-4xl mb-3 opacity-40"></i>
+                        <p class="text-sm">Seu carrinho está vazio.</p>
+                    </div>
+                `;
+                return;
+            }
+
+            container.innerHTML = '';
+            cart.forEach(item => {
+                const itemEl = document.createElement('div');
+                itemEl.className = 'flex items-center justify-between p-3.5 bg-[#070b19] rounded-xl border border-estellar-border';
+                itemEl.innerHTML = `
+                    <div class="flex items-center gap-3">
+                        <div class="w-10 h-10 rounded-lg bg-sky-950 border border-sky-800 flex items-center justify-center text-yellow-400">
+                            <i class="${item.icon || 'fa-solid fa-gamepad'}"></i>
+                        </div>
+                        <div>
+                            <h4 class="text-xs font-bold text-white max-w-[180px] truncate">${item.name}</h4>
+                            <span class="text-xs text-yellow-400 font-semibold">R$ ${item.price.toFixed(2).replace('.', ',')}</span>
+                        </div>
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <button onclick="changeQty(${item.id}, -1)" class="w-7 h-7 rounded-lg bg-estellar-card border border-estellar-border text-slate-300 hover:text-white flex items-center justify-center text-xs">-</button>
+                        <span class="text-xs font-bold text-white w-4 text-center">${item.qty}</span>
+                        <button onclick="changeQty(${item.id}, 1)" class="w-7 h-7 rounded-lg bg-estellar-card border border-estellar-border text-slate-300 hover:text-white flex items-center justify-center text-xs">+</button>
+                    </div>
+                `;
+                container.appendChild(itemEl);
+            });
+        }
+
+        function changeQty(id, delta) {
+            const item = cart.find(i => i.id === id);
+            if (!item) return;
+            item.qty += delta;
+            if (item.qty <= 0) {
+                cart = cart.filter(i => i.id !== id);
+            }
+            updateCartUI();
+        }
+
+        function toggleCart() {
+            const drawer = document.getElementById('cart-drawer');
+            drawer.classList.toggle('hidden');
+        }
+
+        function proceedToCheckout() {
+            if (cart.length === 0) return;
+            toggleCart();
+            document.getElementById('checkout-modal').classList.remove('hidden');
+            document.getElementById('checkout-step-1').classList.remove('hidden');
+            document.getElementById('checkout-step-2').classList.add('hidden');
+            document.getElementById('checkout-step-3').classList.add('hidden');
+        }
+
+        function closeCheckoutModal() {
+            document.getElementById('checkout-modal').classList.add('hidden');
+            if (timerInterval) clearInterval(timerInterval);
+        }
+
+        function closeCheckoutModalCompletely() {
+            closeCheckoutModal();
+            cart = [];
+            updateCartUI();
+        }
+
+        function resetCheckout() {
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById('checkout-step-2').classList.add('hidden');
+            document.getElementById('checkout-step-1').classList.remove('hidden');
+        }
+
+        function generatePix(event) {
+            event.preventDefault();
+            const nick = document.getElementById('roblox-nick').value;
+            if (!nick) return;
+
+            document.getElementById('checkout-step-1').classList.add('hidden');
+            document.getElementById('checkout-step-2').classList.remove('hidden');
+
+            let totalSeconds = 300;
+            const timerDisplay = document.getElementById('pix-timer');
+            
+            if (timerInterval) clearInterval(timerInterval);
+            timerInterval = setInterval(() => {
+                let minutes = Math.floor(totalSeconds / 60);
+                let seconds = totalSeconds % 60;
+                timerDisplay.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+                totalSeconds--;
+                if (totalSeconds < 0) {
+                    clearInterval(timerInterval);
+                    timerDisplay.textContent = "Expirado";
+                }
+            }, 1000);
+        }
+
+        function copyPixCode() {
+            const input = document.getElementById('pix-copy-input');
+            input.select();
+            document.execCommand('copy');
+            showToast("Pix Copiado", "Chave Pix copiada com sucesso.");
+        }
+
+        function simulatePaymentSuccess() {
+            if (timerInterval) clearInterval(timerInterval);
+            const nick = document.getElementById('roblox-nick').value || "Jogador";
+            document.getElementById('success-nick').textContent = nick;
+
+            document.getElementById('checkout-step-2').classList.add('hidden');
+            document.getElementById('checkout-step-3').classList.remove('hidden');
+            showToast("Pagamento Confirmado!", "Sua compra foi aprovada com sucesso.");
+        }
+
+        function openAdminModal() {
+            document.getElementById('admin-modal').classList.remove('hidden');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('admin-modal').classList.add('hidden');
+        }
+
+        function updateAdminStats() {
+            document.getElementById('stat-products').textContent = products.length;
+        }
+
+        function addNewProduct(event) {
+            event.preventDefault();
+            const name = document.getElementById('admin-name').value;
+            const category = document.getElementById('admin-category').value;
+            const price = parseFloat(document.getElementById('admin-price').value);
+            const icon = document.getElementById('admin-icon').value;
+            const desc = document.getElementById('admin-desc').value;
+
+            const newProd = {
+                id: products.length + 1,
+                name,
+                category,
+                price,
+                desc,
+                icon: icon || 'fa-solid fa-gamepad'
+            };
+
+            products.push(newProd);
+            renderProducts();
+            updateAdminStats();
+            closeAdminModal();
+            document.getElementById('admin-product-form').reset();
+            showToast("Produto Cadastrado", `${name} foi adicionado à vitrine.`);
+        }
+
+        function openFeedbackModal() {
+            document.getElementById('feedback-modal').classList.remove('hidden');
+        }
+
+        function closeFeedbackModal() {
+            document.getElementById('feedback-modal').classList.add('hidden');
+        }
+
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function scrollToSection(id) {
+            const el = document.getElementById(id);
+            if (el) {
+                el.scrollIntoView({ behavior: 'smooth' });
+            }
+        }
+
+        function showToast(title, message) {
+            const toast = document.getElementById('toast');
+            document.getElementById('toast-title').textContent = title;
+            document.getElementById('toast-msg').textContent = message;
+
+            toast.classList.remove('translate-y-32', 'opacity-0');
+            setTimeout(() => {
+                toast.classList.add('translate-y-32', 'opacity-0');
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
